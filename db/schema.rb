@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_17_153336) do
+ActiveRecord::Schema.define(version: 2022_09_22_152932) do
 
   create_table "article_categories", force: :cascade do |t|
     t.integer "article_id"
@@ -31,6 +31,48 @@ ActiveRecord::Schema.define(version: 2021_02_17_153336) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "countries", primary_key: "code", id: :string, force: :cascade do |t|
+    t.string "name"
+  end
+
+  create_table "days", force: :cascade do |t|
+    t.integer "match_day"
+    t.date "match_date"
+  end
+
+  create_table "matches", force: :cascade do |t|
+    t.integer "day_id"
+    t.string "stage_code"
+    t.datetime "started_at"
+    t.string "home_country_code"
+    t.string "away_country_code"
+    t.float "home_odds"
+    t.float "away_odds"
+    t.float "draw_odds"
+    t.string "winner"
+    t.index ["day_id"], name: "index_matches_on_day_id"
+  end
+
+  create_table "outcomes", primary_key: "code", id: :string, force: :cascade do |t|
+    t.string "name"
+  end
+
+  create_table "picks", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "match_id"
+    t.string "outcome_code"
+    t.integer "score"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["match_id"], name: "index_picks_on_match_id"
+    t.index ["user_id"], name: "index_picks_on_user_id"
+  end
+
+  create_table "stages", primary_key: "code", id: :string, force: :cascade do |t|
+    t.string "name"
+    t.integer "weighting"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "username"
     t.string "email"
@@ -40,4 +82,7 @@ ActiveRecord::Schema.define(version: 2021_02_17_153336) do
     t.boolean "admin", default: false
   end
 
+  add_foreign_key "matches", "days"
+  add_foreign_key "picks", "matches"
+  add_foreign_key "picks", "users"
 end
