@@ -18,7 +18,7 @@ class User < ApplicationRecord
     return if picks.count == Match.count
     # Generate picks for user for every matches
     Match.all.each do |match|
-      Pick.find_or_create!(user_id: self.id, match_id: match.id)
+      Pick.find_or_create_by!(user_id: self.id, match_id: match.id)
     end
   end
 

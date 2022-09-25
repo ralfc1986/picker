@@ -18,5 +18,12 @@ class Match < ApplicationRecord
     started_at < Time.now
   end
 
+  def winner_odds
+    return if result.nil?
+    return home_odds if result.code = "HOME"
+    return draw_odds if result.code = "DRAW"
+    return away_odds if result.code = "AWAY"
+  end
+
 end
   

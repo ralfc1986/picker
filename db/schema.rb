@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_09_22_152932) do
+ActiveRecord::Schema[7.0].define(version: 2022_09_22_152958) do
   create_table "article_categories", force: :cascade do |t|
     t.integer "article_id"
     t.integer "category_id"
@@ -37,6 +37,28 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_22_152932) do
   create_table "days", force: :cascade do |t|
     t.integer "match_day"
     t.date "match_date"
+  end
+
+  create_table "league_by_days", force: :cascade do |t|
+    t.integer "day_id"
+    t.integer "user_id"
+    t.integer "points"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["day_id"], name: "index_league_by_days_on_day_id"
+    t.index ["user_id"], name: "index_league_by_days_on_user_id"
+  end
+
+  create_table "league_masters", force: :cascade do |t|
+    t.integer "day_id"
+    t.integer "user_id"
+    t.integer "points"
+    t.integer "position"
+    t.integer "position_movement"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["day_id"], name: "index_league_masters_on_day_id"
+    t.index ["user_id"], name: "index_league_masters_on_user_id"
   end
 
   create_table "matches", force: :cascade do |t|
@@ -81,6 +103,10 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_22_152932) do
     t.boolean "admin", default: false
   end
 
+  add_foreign_key "league_by_days", "days"
+  add_foreign_key "league_by_days", "users"
+  add_foreign_key "league_masters", "days"
+  add_foreign_key "league_masters", "users"
   add_foreign_key "matches", "days"
   add_foreign_key "picks", "matches"
   add_foreign_key "picks", "users"
