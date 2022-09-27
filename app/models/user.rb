@@ -2,7 +2,9 @@ class User < ApplicationRecord
   before_save { self.email = email.downcase }
   has_many :articles, dependent: :destroy
   has_many :picks, dependent: :destroy
-  before_validation :add_picks
+  has_many :league_by_days, dependent: :destroy
+  has_many :league_masters, dependent: :destroy
+  after_save :add_picks
   validates :username, presence: true,
                       uniqueness: { case_sensitive: false },
                       length: { minimum:3, maximum:25 }

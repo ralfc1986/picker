@@ -1,6 +1,6 @@
 class LeagueMaster < ApplicationRecord
   belongs_to :day
-  has_many :users
+  belongs_to :user
 
   default_scope      {order(position: :asc)}
   scope :on_day,  -> (inp_day) { where(day: inp_day)}
@@ -11,8 +11,9 @@ class LeagueMaster < ApplicationRecord
     # Calculate the league table till yesterday(where all matches before is done)
     # day_no = Day.where(match_date: Date.today).first.match_day - 1 if day_no.nil?
     # Calculate from scratch up(process heavy)
-    day_no = LeagueByDay.pluck(:day_id).max
-    for i in 1..day_no do
+    day_no = Day.today.try(:match_day)
+    return if day_no.nil?
+    for i in 1..day_no do 
       league_on_day = LeagueByDay.on_day(i)
       return if league_on_day.nil? 
       prev_league_on_day = i>1 ? LeagueByDay.on_day(i-1) : nil
@@ -29,7 +30,6 @@ class LeagueMaster < ApplicationRecord
       prev_league_master.pluck(:user_id, :points).to_h if prev_league_on_day.present?
       prev_league_master_hash = prev_league_master.present? ? prev_league_master.pluck(:user_id, :position).to_h : nil
       for pos in 1..self.on_day(i).count
-        byebug
         current_top = self.on_day(i).where(position: nil).order(points: :desc).first
         current_top.update_columns(position: pos)
         if i>1

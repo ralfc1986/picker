@@ -1,6 +1,6 @@
 class LeagueByDay < ApplicationRecord
   belongs_to :day
-  has_many :users
+  belongs_to :user
 
   scope :on_day, -> (inp_day) { where(day: inp_day)}
   scope :by_user, -> (user_id) { where(users: user_id)}
@@ -10,10 +10,20 @@ class LeagueByDay < ApplicationRecord
 
   def self.process_scores(day)
     day_obj = Day.find(day)
-    return if day_obj.matches.where(outcome_code: nil).present?
-    
-    day_obj.matches.each do |match|
-      weightage = match.stage.weighting
+    day_matches = day_obj.matches
+    # return if none of the matches on the day has result
+    return if day_matches.count == day_matches.where(outcome_code: nil).count
+    # weightage for all the matches within the day is the same
+    weightage = day_matches.first.stage.weighting
+
+    # process the all the picks points
+    day_matches.order(:started_at).each do |match|
+      # does not include match that has not started
+      unless match.started?
+        # reset the score for current and all the next matches(if current match has not started)
+        match.picks.update_all(score: 0)
+        next
+      end
       winner_points = match.winner_odds*weightage
       # Update all picks score to -weightage
       match.picks.update_all(score: -weightage)
@@ -21,14 +31,22 @@ class LeagueByDay < ApplicationRecord
       match.picks.by_winners.update_all(score: winner_points)
     end
 
-    users_daily_score_hash =  day_obj.picks.group(:user_id).sum(:score)
+    users_daily_score_hash = day_obj.picks.group(:user_id).sum(:score)
 
     users_daily_score_hash.each do |i|
       self.create(day_id: day, user_id: i.first, points: i.last )
     end
 
     LeagueMaster.process_scores
+  end
 
+  def self.daily_mvps(day)
+    daily_table = self.on_day(day)
+    # points that is nil means table has not process before
+    return if daily_table.nil? || daily_table.where(points: nil).exists?
+    highest_points = daily_table.maximum(:points)
+    # daily_table.joins(:user).where(points: highest_points)
+    User.joins(:league_by_days).where(league_by_days: {points: highest_points, day_id: day})
   end
     
 end
