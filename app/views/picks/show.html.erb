@@ -1,0 +1,28 @@
+<h1 class="text-center mt-4"><%= @user.username.titleize%> Picks</h1>
+
+<div class="col-md-11">
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Day</th>
+        <th scope="col">Weightage</th>
+        <th scope="col">Home</th>
+        <th scope="col">Away</th>
+        <th scope="col">Forecast</th>
+        <th scope="col">Points</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @user_picks_matches.each do |item| %>      
+        <tr>
+          <td><%= item.match.day_id %></td>
+          <td><%= item.match.stage.weighting %></td>
+          <td><%= item.match&.home&.name %></td>
+          <td><%= item.match&.away&.name %></td>
+          <td><%= item.forecast.name %></td>
+          <td><%= item.score %></td>          
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>  

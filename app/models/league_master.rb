@@ -11,7 +11,8 @@ class LeagueMaster < ApplicationRecord
 
   def self.process_scores
     # Calculate the league table till today
-    day_until = Day.today.try(:match_day)    
+    # day_until = Day.today.try(:match_day)
+    day_until = 3
     return if day_until.nil?
     # Re-calculate from day 1 up
     for day in 1..day_until do 

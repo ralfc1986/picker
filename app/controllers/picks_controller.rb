@@ -1,14 +1,12 @@
 class PicksController < ApplicationController
-  def update
-
+  def show
+    @user = User.find(params[:user_id])    
+    @user_picks_matches = @user.picks.with_results.includes(:match) 
   end
 
   private
-  def set_pick
-    @pick = Pick.find(params[:id])
-  end
-
   def pick_params
-    params.require(:pick).permit(:outcome_code)
+    params.require(:pick).permit(:user_id)
   end
 end
+

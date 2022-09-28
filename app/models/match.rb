@@ -8,6 +8,7 @@ class Match < ApplicationRecord
   has_many :picks
 
   scope :display_in_matches,   ->  { joins(:day).merge(Day.today_future).where("matches.home_country_code IS NOT NULL AND matches.away_country_code IS NOT NULL")}
+  scope :with_result,          ->  { where.not(result: nil)}
 
   validates :started_at, presence: true
 

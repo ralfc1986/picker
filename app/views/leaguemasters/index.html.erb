@@ -1,0 +1,76 @@
+<h1 class="text-center mt-4">Latest Current Standings</h1>
+
+<div class="col-md-11">
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Position</th>
+        <th scope="col">User</th>
+        <th scope="col">Day</th>
+        <th scope="col">Points</th>
+        <th scope="col">Position Changed</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @latest_standings_day1.each do |item| %>
+        <tr>
+          <td><%= item.position %></td>
+          <td><%= item.user.username %></td>
+          <td><%= item.day.id %></td>
+          <td><%= item.points %></td>
+          <td><%= item.position_movement %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>  
+
+<div class="col-md-11">
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Position</th>
+        <th scope="col">User</th>
+        <th scope="col">Day</th>
+        <th scope="col">Points</th>
+        <th scope="col">Position Changed</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @latest_standings_day2.each do |item| %>
+        <tr>
+          <td><%= item.position %></td>
+          <td><%= item.user.username %></td>
+          <td><%= item.day.id %></td>
+          <td><%= item.points %></td>
+          <td><%= item.position_movement %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>   
+
+<div class="col-md-11">
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Position</th>
+        <th scope="col">User</th>
+        <th scope="col">Day</th>
+        <th scope="col">Points</th>
+        <th scope="col">Position Changed</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @latest_standings_day3.each do |item| %>
+        <tr>
+          <td><%= item.position %></td>
+          <td><%= item.user.username %></td>
+          <td><%= item.day.id %></td>
+          <td><%= item.points %></td>
+          <td><%= item.position_movement %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>  

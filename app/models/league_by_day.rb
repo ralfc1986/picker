@@ -52,11 +52,11 @@ class LeagueByDay < ApplicationRecord
     # process the all the picks points
     day_matches.order(:started_at).each do |match|
       # does not include match that has not started
-      unless match.started?
-        # reset the score for current and all the next matches(if current match has not started)
-        match.picks.update_all(score: 0)
-        next
-      end
+      # unless match.started?
+      #   # reset the score for current and all the next matches(if current match has not started)
+      #   match.picks.update_all(score: 0)
+      #   next
+      # end
       winner_points = match.winner_odds*weightage
       # Update all picks score to -weightage
       match.picks.update_all(score: -weightage)

@@ -10,6 +10,17 @@
         <!--<a class="nav-link" href="#">Link</a>-->
         <%= link_to "Bloggers", users_path, class:"nav-link" %>
       </li>
+      <% if logged_in? %>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Standings
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">          
+              <%= link_to "Current Standings", leaguemasters_path, class: "dropdown-item" %>
+              <%= link_to "Standings By Day", leaguebydays_path, class: "dropdown-item" %>
+          </div>
+        </li>
+      <% end %>
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Articles
@@ -56,9 +67,5 @@
         </li>
       <% end %>
     </ul>
-    <form class="form-inline my-2 my-lg-0">
-      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-    </form>
   </div>
 </nav>

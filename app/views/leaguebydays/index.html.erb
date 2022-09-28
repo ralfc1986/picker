@@ -1,0 +1,64 @@
+<h1 class="text-center mt-4">Daily Standings</h1>
+
+<div class="col-md-11">
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">User</th>
+        <th scope="col">Day</th>
+        <th scope="col">Points</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @standings_day1.each do |item| %>      
+        <tr>        
+          <td><%= link_to item.user.username, userpicks_path(user_id: item.user)  %></td>
+          <td><%= item.day.id %></td>
+          <td><%= item.points %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
+<div class="col-md-11">
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">User</th>
+        <th scope="col">Day</th>
+        <th scope="col">Points</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @standings_day2.each do |item| %>      
+        <tr>
+          <td><%= link_to item.user.username, userpicks_path(user_id: item.user)  %></td>
+          <td><%= item.day.id %></td>
+          <td><%= item.points %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>  
+
+<div class="col-md-11">
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">User</th>
+        <th scope="col">Day</th>
+        <th scope="col">Points</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @standings_day3.each do |item| %>      
+        <tr>
+          <td><%= link_to item.user.username, userpicks_path(user_id: item.user)  %></td>
+          <td><%= item.day.id %></td>
+          <td><%= item.points %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>  

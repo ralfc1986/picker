@@ -12,4 +12,7 @@ Rails.application.routes.draw do
   delete 'logout', to: 'sessions#destroy'
   resources :categories, except: [:destroy]
   resources :matches, only: :index
+  resources :leaguebydays, only: [:index, :show]
+  resources :leaguemasters, only: [:index, :show]
+  get 'userpicks', to: 'picks#show'
 end
