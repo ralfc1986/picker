@@ -1,0 +1,36 @@
+<h1 class="text-center mt-4">Matches</h1>
+
+<div class="col-md-11 text-center">
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Day</th>
+        <th scope="col">Kick-Off</th>
+        <th scope="col">Stages</th>
+        <th scope="col">Weightage</th>
+        <th scope="col">Home</th>
+        <th scope="col">Away</th>
+        <th scope="col">Home Odds</th>
+        <th scope="col">Draw Odds</th>
+        <th scope="col">Away</th>
+        <th scope="col">Forecast</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @matches.each do |match| %>      
+        <tr>
+          <td><%= match.day_id %></td>
+          <td><%= match.started_at.localtime.to_formatted_s(:long) %></td>
+          <td><%= match.stage.name %></td>
+          <td><%= match.stage.weighting %></td>
+          <td><%= match&.home&.name %></td>
+          <td><%= match&.away&.name %></td>
+          <td><%= match.home_odds %></td>
+          <td><%= match.draw_odds %></td>
+          <td><%= match.away_odds %></td>
+          <td><%= match.day_id %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>  

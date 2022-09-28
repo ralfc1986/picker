@@ -4,7 +4,8 @@ class Day < ApplicationRecord
   has_many :league_by_days, dependent: :destroy
   has_many :league_masters, dependent: :destroy
 
-  scope :today,     -> { where(match_date: Date.today)}
-  scope :yesterday, -> { where(match_date: Date.yesterday)}
+  scope :today,         -> { where(match_date: Date.today)}
+  scope :yesterday,     -> { where(match_date: Date.yesterday)}
+  scope :today_future,  -> { where("days.match_date >= ?", Date.today)}
 end
   
